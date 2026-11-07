@@ -155,6 +155,12 @@ p{margin:0;max-width:60ch}
 .opener h2{position:relative;z-index:2}
 .bust{position:absolute;top:0;right:-40px;bottom:0;width:60%;overflow:hidden;pointer-events:none}
 .bust img{position:absolute;left:50%;top:-70vh;height:196vh;width:auto;max-width:none;transform:translateX(-47.7%)}
+/* the portrait sits after the title in the flow, so the title never runs into him */
+@media (min-width:901px){
+.anim .panel.opener{width:auto}
+.anim .opener .bust{position:relative;top:auto;right:auto;bottom:auto;flex:none;align-self:stretch;width:86vh;height:auto;margin:calc(-1*clamp(40px,9vh,90px)) 0 calc(-1*clamp(70px,16vh,150px)) -27vh}
+.anim .opener .bust img{left:0;transform:translateX(-15%)}
+}
 .yr{font-size:min(15vw,27vh);line-height:.8;font-weight:900;font-variation-settings:'wdth' 62,'wght' 900;display:block;margin-bottom:.12em}
 .panel h3{font-size:min(4.4vw,8vh);margin-bottom:.35em;font-variation-settings:'wdth' 88,'wght' 800}
 .role{font-weight:700;margin-bottom:.4em}
