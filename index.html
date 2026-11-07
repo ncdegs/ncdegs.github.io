@@ -22,7 +22,7 @@ body{margin:0;background:#050a2e;-webkit-font-smoothing:antialiased;overflow-x:h
 a{color:inherit}
 ::selection{background:#ff2b45;color:#fff}
 *{box-sizing:border-box}
-.site{--ink:#fff;--bg:#050a2e;--pad:clamp(20px,5vw,88px);--padr:clamp(20px,8vw,128px);color:var(--ink);background-color:#050a2e;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:clamp(17px,1.3vw,20px);line-height:1.5;position:relative;overflow-x:clip;transition:color .3s}
+.site{isolation:isolate;--ink:#fff;--bg:#050a2e;--pad:clamp(20px,5vw,88px);--padr:clamp(20px,8vw,128px);color:var(--ink);background-color:#050a2e;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:clamp(17px,1.3vw,20px);line-height:1.5;position:relative;overflow-x:clip;transition:color .3s}
 .site :focus-visible{outline:3px solid var(--ink);outline-offset:4px;border-radius:4px}
 .d{font-family:'Anybody','Arial Narrow',sans-serif;font-weight:800;font-variation-settings:'wdth' 100,'wght' 800;line-height:.95;letter-spacing:-.005em;margin:0;text-wrap:balance}
 .big{font-size:clamp(46px,8.2vw,150px)}
@@ -48,7 +48,14 @@ p{margin:0;max-width:60ch}
 .rail a b{position:absolute;right:30px;top:50%;transform:translate(8px,-50%);opacity:0;white-space:nowrap;font-weight:700;font-size:14px;transition:opacity .25s,transform .35s cubic-bezier(.16,1,.3,1);font-variant-numeric:tabular-nums;pointer-events:none}
 .rail:hover a b,.rail a:focus-visible b{opacity:1;transform:translate(0,-50%)}
 .rail-mark{position:absolute;right:-5px;width:20px;height:3px;background:var(--ink);top:0;margin-top:-1.5px;border-radius:2px}
-.read{position:fixed;right:clamp(14px,2vw,30px);bottom:clamp(14px,2.6vh,26px);z-index:41;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.read{position:fixed;right:clamp(14px,2vw,30px);bottom:clamp(14px,2.6vh,26px);z-index:41;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;display:flex;align-items:center;gap:9px}
+.rw{width:96px;height:14px;overflow:visible}
+.rw path{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+.fr{position:absolute;left:0;right:0;height:0;z-index:-1;pointer-events:none}
+.fr::before,.fr::after{content:'';position:absolute;top:0;height:2px;background:#06092b;opacity:.7}
+.fr::before{left:0;width:calc(var(--pad) - 10px)}
+.fr::after{right:0;width:calc(var(--padr) - 10px)}
+.fr span{position:absolute;left:8px;top:-18px;font-weight:700;font-size:11.5px;font-variant-numeric:tabular-nums;color:#06092b;white-space:nowrap}
 
 /* cursor */
 .dot{position:fixed;left:0;top:0;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:70;opacity:0;transition:width .25s,height .25s,margin .25s,opacity .25s}
@@ -87,8 +94,34 @@ p{margin:0;max-width:60ch}
 .waves canvas{width:100%;height:100%;display:block;opacity:.17}
 .say{min-height:68vh;display:flex;align-items:center;padding:0 var(--padr) 0 var(--pad);position:relative}
 .say .d{font-size:clamp(50px,8.2vw,160px);line-height:.98;font-variation-settings:'wdth' 90,'wght' 800;width:100%;position:relative;z-index:2}
-.pic{position:absolute;top:50%;margin:0;width:min(29vw,430px);aspect-ratio:4/5;border-radius:14px;overflow:hidden;transform:translateY(-50%);box-shadow:0 26px 60px #06092b55;will-change:transform}
+.pic{position:absolute;top:50%;margin:0;width:min(25vw,370px);aspect-ratio:4/5;border-radius:14px;overflow:hidden;transform:translateY(-50%);box-shadow:0 26px 60px #06092b55;will-change:transform}
 .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.pic.vg{background:none;box-shadow:none;overflow:visible;border-radius:0;aspect-ratio:1/1;color:var(--ink)}
+.vgs{width:100%;height:100%;display:block;overflow:visible}
+.vg *{animation-play-state:paused}
+.vg.run *{animation-play-state:running}
+.thin{stroke-width:3}
+.hair{stroke-width:2;opacity:.35}
+.nuc{transform-box:fill-box;transform-origin:center;animation:nuc 1.6s ease-in-out infinite alternate}
+@keyframes nuc{to{transform:scale(1.25)}}
+.el{animation:fly 2.6s linear infinite;offset-rotate:0deg;offset-path:path('M30 200 A170 62 0 1 1 370 200 A170 62 0 1 1 30 200')}
+.e2{animation-duration:3.3s;animation-delay:-1s}
+.e3{animation-duration:2.1s;animation-delay:-.4s}
+.tr1{animation:slide 1.3s linear infinite}
+.tr2{animation:slide 2.2s linear infinite}
+@keyframes slide{to{transform:translateX(120px)}}
+.mir{stroke-width:9}
+.beamz{stroke-width:4}
+.pulse{fill:#f3203c;offset-path:path('M0 73 H39 V33 H361 V213 H39 V353 H361 V400');offset-rotate:0deg;animation:fly 3s linear infinite}
+.p2{animation-delay:-1s}.p3{animation-delay:-2s}
+.ring{transform-box:fill-box;transform-origin:center;animation:ring 1.8s cubic-bezier(.2,.6,.4,1) infinite}
+@keyframes ring{from{transform:scale(.9);opacity:1}to{transform:scale(1.5);opacity:0}}
+.prog{stroke-dasharray:132;animation:prog 4s linear infinite}
+@keyframes prog{from{stroke-dashoffset:132}to{stroke-dashoffset:0}}
+.sq{fill:currentColor;opacity:.2}
+.kn{animation:knight 6s cubic-bezier(.65,0,.35,1) infinite}
+.kp{fill:currentColor;transform:scale(.98)}
+@keyframes knight{0%,18%{transform:translate(86px,10px)}25%,43%{transform:translate(238px,86px)}50%,68%{transform:translate(162px,238px)}75%,93%{transform:translate(10px,162px)}100%{transform:translate(86px,10px)}}
 .say:nth-child(even) .pic{right:var(--padr)}
 .say:nth-child(odd) .pic{left:var(--pad)}
 .say .d span{display:block;white-space:nowrap}
@@ -114,7 +147,7 @@ p{margin:0;max-width:60ch}
 .jr-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center}
 .track{display:flex;position:relative;will-change:transform;height:100%}
 .beam{position:absolute;left:0;right:0;bottom:clamp(40px,10vh,100px);height:4px;background:var(--ink);transform-origin:left;transform:scaleX(0)}
-.panel{flex:none;width:min(70vw,960px);height:100%;padding:clamp(40px,9vh,90px) clamp(30px,5vw,80px) clamp(70px,16vh,150px);display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(20px,3vw,50px);align-items:center;position:relative}
+.panel{flex:none;width:min(78vw,1120px);height:100%;padding:clamp(40px,9vh,90px) clamp(30px,5vw,80px) clamp(70px,16vh,150px);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(20px,3vw,50px);align-items:center;position:relative}
 .panel.first{width:min(56vw,760px);padding-left:var(--pad);display:flex;align-items:center}
 .panel::after{content:'';position:absolute;left:clamp(30px,5vw,80px);bottom:clamp(40px,10vh,100px);width:20px;height:20px;margin-bottom:-8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 6px var(--bg)}
 .panel.first::after{display:none}
@@ -125,20 +158,21 @@ p{margin:0;max-width:60ch}
 .yr{font-size:min(15vw,27vh);line-height:.8;font-weight:900;font-variation-settings:'wdth' 62,'wght' 900;display:block;margin-bottom:.12em}
 .panel h3{font-size:min(4.4vw,8vh);margin-bottom:.35em;font-variation-settings:'wdth' 88,'wght' 800}
 .role{font-weight:700;margin-bottom:.4em}
-.panel svg{width:100%;height:auto;max-height:52vh;overflow:visible}
+.panel svg{width:100%;height:auto;max-height:60vh;overflow:visible}
 .ln2{fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
 .fl{fill:currentColor}
 @keyframes dash{to{stroke-dashoffset:-60}}
 .flow{stroke-dasharray:8 12;animation:dash 1.6s linear infinite}
-@keyframes ping{from{transform:scale(.08);opacity:1}to{transform:scale(1);opacity:0}}
-.ping{transform-box:fill-box;transform-origin:center;animation:ping 2.6s cubic-bezier(.2,.6,.4,1) infinite}
-.ping.b{animation-delay:.87s}.ping.c{animation-delay:1.74s}
 @keyframes spin{to{transform:rotate(360deg)}}
 .mag{transform-box:fill-box;transform-origin:center;animation:spin 7s linear infinite}
 @keyframes fly{from{offset-distance:0%}to{offset-distance:100%}}
-.rk{offset-path:path('M30 280 C 120 60, 300 20, 400 150');animation:fly 4.5s cubic-bezier(.3,.1,.5,1) infinite;offset-rotate:auto}
 @keyframes bwk{to{stroke-dashoffset:-44}}
 .bw{stroke-dasharray:14 8;animation:bwk .9s linear infinite}
+.panel .flow,.panel .mag,.panel .bw{animation-play-state:paused}
+.panel.live .flow,.panel.live .mag,.panel.live .bw{animation-play-state:running}
+.ghost{opacity:.22}
+.panel.hit::after{animation:pop .6s cubic-bezier(.16,1,.3,1)}
+@keyframes pop{40%{transform:scale(1.5)}}
 
 /* bench */
 .bench{padding:clamp(70px,14vh,170px) var(--padr) clamp(70px,14vh,170px) var(--pad);position:relative}
@@ -151,6 +185,10 @@ p{margin:0;max-width:60ch}
 .s1{grid-column:1/5;grid-row:1;margin-top:clamp(40px,10vh,120px)}.s1 .frame{aspect-ratio:3/4}
 .s2{grid-column:5/13;grid-row:1}.s2 .frame{aspect-ratio:16/9}
 .s3{grid-column:8/13;grid-row:2}.s3 .frame{aspect-ratio:3/4}
+.s-lens{grid-column:1/8;grid-row:3;margin:0;overflow:hidden;touch-action:pan-y;cursor:ew-resize}
+.s-lens svg{display:block;width:100%;height:auto;overflow:hidden}
+.lray{stroke-width:3}
+.lvirt{stroke-width:3;stroke-dasharray:7 8;opacity:.6}
 .s6{grid-column:2/8;grid-row:2}.s6 .frame{aspect-ratio:4/3}
 
 /* videos */
@@ -190,10 +228,20 @@ p{margin:0;max-width:60ch}
 .skill-notes h3{font-size:clamp(21px,1.9vw,30px);margin-bottom:.35em;font-variation-settings:'wdth' 90,'wght' 800;line-height:1}
 
 /* life */
-.life{padding:clamp(70px,12vh,150px) var(--padr) clamp(70px,12vh,150px) var(--pad);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(30px,5vw,80px);align-items:center;min-height:100vh}
+.life{position:relative;padding:clamp(70px,12vh,150px) var(--padr) clamp(70px,12vh,150px) var(--pad);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(30px,5vw,80px);align-items:center;min-height:100vh}
 .rome .frame{border-radius:16px;overflow:hidden;aspect-ratio:4/5}
 .rome img{width:100%;height:112%;object-fit:cover;display:block;will-change:transform;cursor:zoom-in}
 .life h2{position:relative;z-index:2;margin-left:-15vw}
+.trips{grid-column:1/-1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(14px,2vw,28px);align-items:start;margin-top:clamp(30px,6vh,70px)}
+.trip{margin:0;will-change:transform}
+.trip .frame{overflow:hidden;border-radius:14px}
+.trip img{display:block;width:100%;height:100%;object-fit:cover;cursor:zoom-in}
+.trip figcaption{margin-top:8px;font-weight:700;font-size:15.5px}
+.t1{grid-column:1/6}.t1 .frame{aspect-ratio:3/4}
+.t2{grid-column:6/9;margin-top:9vh}.t2 .frame{aspect-ratio:9/16}
+.t3{grid-column:9/13;margin-top:3vh}.t3 .frame{aspect-ratio:1/1}
+.t4{grid-column:1/8}.t4 .frame{aspect-ratio:3/2}
+.t5{grid-column:8/13;margin-top:7vh}.t5 .frame{aspect-ratio:4/3}
 .loves{list-style:none;margin:.6em 0 0;padding:0}
 .loves li{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 14px;padding:.12em 0;font-family:'Anybody','Arial Narrow',sans-serif;font-size:clamp(34px,5.2vw,92px);line-height:1;font-variation-settings:'wdth' 72,'wght' 800;transition:font-variation-settings .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1)}
 .loves li:hover{font-variation-settings:'wdth' 118,'wght' 900;transform:translateX(10px)}
@@ -201,8 +249,13 @@ p{margin:0;max-width:60ch}
 
 /* infrared */
 .ir{position:relative;overflow:hidden;padding:clamp(80px,16vh,190px) 0 0}
-.ir-top{padding:0 var(--padr) 0 var(--pad);display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,4vw,60px);align-items:end;margin-bottom:clamp(60px,12vh,140px)}
+.ir-top{position:relative;padding:0 var(--padr) 0 var(--pad);display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,4vw,60px);align-items:end;margin-bottom:clamp(60px,12vh,140px)}
 .ir-top p{margin-top:.8em;color:#d6d9ee}
+.ir-trail{position:absolute;inset:0;display:block;pointer-events:none}
+.ir-note{margin:0 0 10px;font-size:15.5px;color:#d6d9ee}
+.ir-spot,.ir-trail i{position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;pointer-events:none;opacity:0}
+.ir-spot{background:#ffe600;box-shadow:0 0 0 1.5px #06070f;z-index:3;transition:opacity .15s}
+.ir-trail i{background:#ffe600;width:9px;height:9px;left:-4.5px;top:-4.5px;z-index:2}
 .osa .frame{border-radius:14px;overflow:hidden}
 .osa img{display:block;width:100%;height:auto;cursor:zoom-in}
 .ir>h2{padding:0 var(--padr) 0 var(--pad);margin-bottom:.3em;position:relative;z-index:2}
@@ -216,8 +269,40 @@ p{margin:0;max-width:60ch}
 .links span{position:relative;z-index:1;font-weight:500}
 .l1{--c:#ffe600}.l2{--c:#29f15f}.l3{--c:#ff4626}.l4{--c:#00e0e6}.l5{--c:#ff9f0a}
 .foot{padding:clamp(40px,8vh,80px) var(--padr) 34px var(--pad);display:flex;flex-wrap:wrap;gap:8px 30px;justify-content:space-between;font-size:14.5px;color:#c6cae6;position:relative;z-index:2;box-shadow:inset 0 1px 0 #ffffff30}
-.peek{position:absolute;right:20vw;bottom:0;width:min(44vw,620px);z-index:1;pointer-events:none;will-change:transform}
-.peek img{display:block;width:100%;height:auto}
+
+/* the hidden door */
+.hd{appearance:none;background:none;border:0;padding:0;margin:0 0 0 7px;width:14px;height:14px;vertical-align:-2px;cursor:default;position:relative}
+.hd::after{content:'';position:absolute;inset:-15px}
+.hd svg{display:block;width:100%;height:100%}
+.hd path{fill:#11121e;transition:fill .5s}
+.hd:hover path{fill:#1d1420}
+.vault{position:fixed;inset:0;z-index:80;display:none;flex-direction:column;align-items:center;justify-content:center;background:#06070f;color:#fff;overflow-y:auto;overscroll-behavior:contain}
+.vault.open{display:flex}
+.vault.unlocked{justify-content:flex-start;background:#c8102e}
+.v-x{appearance:none;position:fixed;top:14px;right:14px;z-index:3;width:46px;height:46px;border:0;border-radius:50%;background:#ffffff1f;color:#fff;cursor:pointer;padding:12px}
+.v-x svg{display:block;width:100%;height:100%}
+.v-x path{stroke-width:2.4}
+.v-form{display:grid;gap:12px;width:min(320px,84vw);font-weight:500}
+.v-form[hidden]{display:none}
+.v-form label{font-family:'Anybody','Arial Narrow',sans-serif;font-weight:800;font-size:34px;font-variation-settings:'wdth' 80,'wght' 800}
+.v-form input{appearance:none;font:inherit;font-size:18px;color:#fff;background:#ffffff14;border:0;box-shadow:inset 0 0 0 2px #ffffff55;border-radius:12px;min-height:50px;padding:0 14px;outline:0}
+.v-form input:focus{box-shadow:inset 0 0 0 2px #fff}
+.v-form button{appearance:none;font:inherit;font-weight:800;min-height:48px;border:0;border-radius:30px;background:#f3203c;color:#fff;cursor:pointer}
+.v-form button:disabled{opacity:.5}
+.v-form p{margin:0;min-height:1.4em;color:#ffb3bf}
+.shake{animation:shake .45s}
+@keyframes shake{20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+.v-album{width:100%;position:relative;padding:clamp(70px,12vh,120px) clamp(18px,5vw,70px) 70px}
+.v-album:empty{display:none}
+.v-line{font-family:'Anybody','Arial Narrow',sans-serif;font-weight:900;font-size:clamp(44px,9vw,150px);line-height:.95;font-variation-settings:'wdth' 74,'wght' 900;text-align:center;margin:0 auto .5em;max-width:none;position:relative;z-index:2;animation:vup 1s cubic-bezier(.16,1,.3,1) both}
+.v-wall{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,80vw),1fr));gap:clamp(18px,3vw,38px);align-items:center;max-width:1300px;margin:0 auto;position:relative;z-index:2}
+.v-card{margin:0;background:#fff;padding:10px 10px 34px;border-radius:4px;box-shadow:0 22px 50px #4a000f66;animation:vup .9s cubic-bezier(.16,1,.3,1) both;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.v-card:nth-child(odd){rotate:-2.4deg}.v-card:nth-child(even){rotate:2deg}
+.v-card:hover{transform:scale(1.03)}
+.v-card img{display:block;width:100%;height:auto}
+@keyframes vup{from{transform:translateY(46px);opacity:0}}
+.fh{position:absolute;bottom:-40px;z-index:1;fill:#ffffff40;pointer-events:none;animation:fh linear infinite}
+@keyframes fh{to{transform:translateY(-110vh) rotate(24deg)}}
 
 /* reveals */
 .ln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
@@ -248,10 +333,13 @@ p{margin:0;max-width:60ch}
 @media (max-width:900px){
 .rail,.dot,.lens{display:none}
 .read{right:2px;bottom:12px;font-size:11px;writing-mode:vertical-rl}
-.pic{position:relative;top:auto;left:auto!important;right:auto!important;width:58vw;margin-top:22px;transform:none;aspect-ratio:1/1}
+.rw{display:none}
+.fr span{display:none}
+.pic{position:relative;top:auto;left:auto!important;right:auto!important;width:46vw;margin-top:22px;transform:none;aspect-ratio:1/1}
 .say{flex-direction:column;align-items:flex-start;justify-content:center;padding-top:40px;padding-bottom:40px}
 .say:nth-child(odd){align-items:flex-end}
 .life h2{margin-left:0}
+.t1{grid-column:1/-1}.t2{grid-column:1/7;margin-top:0}.t3{grid-column:7/-1;margin-top:0}.t4,.t5{grid-column:1/-1;margin-top:0}
 .lab,.vid,.life,.ir-top{grid-template-columns:minmax(0,1fr)}
 .lab,.vid,.life{min-height:0}
 .say .d{font-size:clamp(46px,14.2vw,120px);font-variation-settings:'wdth' 52,'wght' 800}
@@ -267,6 +355,7 @@ p{margin:0;max-width:60ch}
 .yr{font-size:clamp(90px,30vw,190px)}
 .panel svg{margin-top:20px;max-height:280px}
 .bench h2{margin-bottom:-.2em}
+.s-lens{grid-column:1/-1;grid-row:auto}
 .s1,.s2,.s3,.s6{grid-column:1/-1;grid-row:auto;margin-top:0}
 .s1,.s6{grid-column:1/9}
 .s3{grid-column:4/-1}
@@ -274,14 +363,14 @@ p{margin:0;max-width:60ch}
 .phones{padding:20px 0}
 .build-photo{height:70vw}
 .build-copy,.skill-notes{grid-template-columns:minmax(0,1fr)}
-.peek{width:62vw;right:-6vw}
 .foot span{max-width:52vw}
 }
 @media (prefers-reduced-motion:reduce){
+.vg *{animation:none!important}
 html{scroll-behavior:auto}
 .curtain{display:none}
 .lr,.lg,.lb,.hero-copy{animation:none}
-.flow,.ping,.mag,.rk,.bw{animation:none}
+.flow,.mag,.bw{animation:none}
 }
 </style>
 
@@ -308,7 +397,14 @@ html{scroll-behavior:auto}
 <a href="#life" data-nm="650"><b>650 nm Life</b></a>
 <a href="#hi" data-nm="1034"><b>1034 nm Say hi</b></a>
 </nav>
-<div class="read" id="read" aria-hidden="true">450 nm</div>
+<div class="read" aria-hidden="true"><svg class="rw" viewBox="0 0 96 14"><path id="readWave"></path></svg><span id="read">450 nm</span></div>
+<div class="fr" data-nm="486.13"><span>486.1 H</span></div>
+<div class="fr" data-nm="517.27"><span>517.3 Mg</span></div>
+<div class="fr" data-nm="518.36"><span>518.4 Mg</span></div>
+<div class="fr" data-nm="527.04"><span>527.0 Fe</span></div>
+<div class="fr" data-nm="588.995"><span>589.0 Na</span></div>
+<div class="fr" data-nm="589.592"><span>589.6 Na</span></div>
+<div class="fr" data-nm="656.28"><span>656.3 H</span></div>
 
 <main>
 <section id="top" class="hero-scroll" data-stop="450" data-bg="#050a2e" data-ink="#ffffff">
@@ -338,11 +434,11 @@ html{scroll-behavior:auto}
 
 <section id="who" class="who" aria-label="Bera in five lines">
 <div class="waves"><canvas id="waves" aria-hidden="true"></canvas></div>
-<div class="say" data-stop="470" data-bg="#1e3bff" data-ink="#ffffff"><h2 class="d"><span>Physics at</span><span>Boğaziçi.</span></h2><figure class="pic"><img src="assets/stage.jpg" alt="A blue-coated lens in a black mount" style="object-position:50% 30%"></figure></div>
-<div class="say" data-stop="485" data-bg="#0094ff" data-ink="#06092b"><p class="d"><span>Electronics</span><span>on the side.</span></p><figure class="pic"><img src="assets/bench.jpg" alt="Wiring and a power supply behind an optical breadboard" style="object-position:62% 0%"></figure></div>
-<div class="say" data-stop="500" data-bg="#00e0e6" data-ink="#06092b"><p class="d"><span>Lasers</span><span>in the lab.</span></p><figure class="pic"><img src="assets/table.jpg" alt="Mirror mounts on an optical table" style="object-position:60% 55%"></figure></div>
-<div class="say" data-stop="510" data-bg="#00f0b4" data-ink="#06092b"><p class="d"><span>Science</span><span>on a phone.</span></p><figure class="pic"><img src="assets/blackhole.jpg" alt="A frame from a short video about black holes" style="object-position:50% 45%"></figure></div>
-<div class="say" data-stop="520" data-bg="#0ff08a" data-ink="#06092b"><p class="d"><span>Licensed</span><span>chess player.</span></p><figure class="pic"><img src="assets/rome.jpg" alt="Bera in Rome with the Colosseum behind him" style="object-position:60% 70%"></figure></div>
+<div class="say" data-stop="470" data-bg="#1e3bff" data-ink="#ffffff"><h2 class="d"><span>Physics at</span><span>Boğaziçi.</span></h2><figure class="pic vg" aria-hidden="true"><svg viewBox="0 0 400 400" class="vgs"><g class="ln2 thin"><ellipse cx="200" cy="200" rx="170" ry="62"></ellipse><ellipse cx="200" cy="200" rx="170" ry="62" transform="rotate(60 200 200)"></ellipse><ellipse cx="200" cy="200" rx="170" ry="62" transform="rotate(120 200 200)"></ellipse></g><circle class="fl nuc" cx="200" cy="200" r="20"></circle><g><circle class="fl el e1" r="11"></circle></g><g transform="rotate(60 200 200)"><circle class="fl el e2" r="11"></circle></g><g transform="rotate(120 200 200)"><circle class="fl el e3" r="11"></circle></g></svg></figure></div>
+<div class="say" data-stop="485" data-bg="#0094ff" data-ink="#06092b"><p class="d"><span>Electronics</span><span>on the side.</span></p><figure class="pic vg" aria-hidden="true"><svg viewBox="0 0 400 400" class="vgs"><defs><clipPath id="scopeClip"><rect x="24" y="64" width="352" height="272" rx="14"></rect></clipPath></defs><rect class="ln2" x="24" y="64" width="352" height="272" rx="14"></rect><g class="ln2 hair"><path d="M112 64V336M200 64V336M288 64V336M24 132H376M24 200H376M24 268H376"></path></g><g clip-path="url(#scopeClip)"><path class="ln2 tr tr1" d="M-120 150 Q -90 90 -60 150 T 0 150 T 60 150 T 120 150 T 180 150 T 240 150 T 300 150 T 360 150 T 420 150 T 480 150 T 540 150"></path><path class="ln2 tr tr2" d="M-120 300 V240 H-60 V300 H0 V240 H60 V300 H120 V240 H180 V300 H240 V240 H300 V300 H360 V240 H420 V300 H480 V240 H540"></path></g></svg></figure></div>
+<div class="say" data-stop="500" data-bg="#00e0e6" data-ink="#06092b"><p class="d"><span>Lasers</span><span>in the lab.</span></p><figure class="pic vg" aria-hidden="true"><svg viewBox="0 0 400 400" class="vgs"><path class="ln2 mir" d="M18 52 L60 94 M340 12 L382 54 M340 192 L382 234 M18 192 L60 234 M18 332 L60 374 M340 332 L382 374"></path><path class="ln2 flow beamz" d="M0 73 H39 V33 H361 V213 H39 V353 H361 V400"></path><circle class="pulse p1" r="10"></circle><circle class="pulse p2" r="10"></circle><circle class="pulse p3" r="10"></circle></svg></figure></div>
+<div class="say" data-stop="510" data-bg="#00f0b4" data-ink="#06092b"><p class="d"><span>Science</span><span>on a phone.</span></p><figure class="pic vg" aria-hidden="true"><svg viewBox="0 0 400 400" class="vgs"><rect class="ln2" x="110" y="12" width="180" height="376" rx="30"></rect><path class="ln2" d="M178 34H222"></path><defs><clipPath id="phoneClip"><rect x="122" y="56" width="156" height="288"></rect></clipPath></defs><g clip-path="url(#phoneClip)"><path class="ln2 tr tr1" d="M-120 130 Q -90 90 -60 130 T 0 130 T 60 130 T 120 130 T 180 130 T 240 130 T 300 130 T 360 130 T 420 130"></path></g><circle class="ln2 ring" cx="200" cy="240" r="42"></circle><path class="fl" d="M187 218 L222 240 L187 262 Z"></path><path class="ln2 hair" d="M134 320H266"></path><path class="ln2 prog" d="M134 320H266"></path></svg></figure></div>
+<div class="say" data-stop="520" data-bg="#0ff08a" data-ink="#06092b"><p class="d"><span>Licensed</span><span>chess player.</span></p><figure class="pic vg" aria-hidden="true"><svg viewBox="0 0 400 400" class="vgs"><rect class="ln2" x="10" y="10" width="380" height="380"></rect><rect class="sq" x="10" y="10" width="76" height="76"></rect><rect class="sq" x="162" y="10" width="76" height="76"></rect><rect class="sq" x="314" y="10" width="76" height="76"></rect><rect class="sq" x="86" y="86" width="76" height="76"></rect><rect class="sq" x="238" y="86" width="76" height="76"></rect><rect class="sq" x="10" y="162" width="76" height="76"></rect><rect class="sq" x="162" y="162" width="76" height="76"></rect><rect class="sq" x="314" y="162" width="76" height="76"></rect><rect class="sq" x="86" y="238" width="76" height="76"></rect><rect class="sq" x="238" y="238" width="76" height="76"></rect><rect class="sq" x="10" y="314" width="76" height="76"></rect><rect class="sq" x="162" y="314" width="76" height="76"></rect><rect class="sq" x="314" y="314" width="76" height="76"></rect><g class="kn"><path class="kp" d="M18 66 H58 V60 C56 46 60 34 54 24 C49 15 40 10 35 8 L33 15 L28 10 L27 19 C20 25 14 35 12 44 L19 49 L26 42 L35 39 C33 47 26 53 21 59 Z"></path></g></svg></figure></div>
 </section>
 
 <section id="lab" class="lab" data-stop="530" data-bg="#29f15f" data-ink="#06092b">
@@ -377,12 +473,12 @@ html{scroll-behavior:auto}
 <p>On the electronics team of a high-altitude rocket: communication and telemetry, hardware testing, system integration.</p>
 </div>
 <svg viewBox="0 0 430 310" aria-hidden="true">
-<path class="ln2 flow" d="M30 280 C 120 60, 300 20, 400 150"></path>
-<g class="rk"><path class="fl" d="M-16 -9 L18 0 L-16 9 L-9 0 Z"></path></g>
-<circle class="ln2 ping" cx="30" cy="280" r="90"></circle>
-<circle class="ln2 ping b" cx="30" cy="280" r="90"></circle>
-<circle class="ln2 ping c" cx="30" cy="280" r="90"></circle>
+<path class="ln2 ghost" d="M36 292 C 110 30, 320 30, 396 292"></path>
+<path class="ln2" id="rkPath" pathLength="1" d="M36 292 C 110 30, 320 30, 396 292"></path>
+<path class="ln2 flow" id="rkLink" d="M70 272 L70 272"></path>
 <path class="ln2" d="M0 296 H430"></path>
+<path class="ln2" d="M50 296 A20 20 0 0 1 90 296 M70 276 V262"></path>
+<g id="rkG"><path class="fl" d="M-18 -9 L20 0 L-18 9 L-10 0 Z"></path></g>
 </svg>
 </article>
 
@@ -394,22 +490,25 @@ html{scroll-behavior:auto}
 <p>Co-designed Halbach array levitation disks and ran the electromagnetic simulations in Ansys. I also wrote technical reports. The team placed 4th among 20+ teams in its first year.</p>
 </div>
 <svg viewBox="0 0 430 310" aria-hidden="true">
-<path class="ln2 flow" d="M20 118 C 100 30, 330 30, 410 118"></path>
-<path class="ln2 flow" d="M60 118 C 130 66, 300 66, 370 118"></path>
+<path class="ln2" d="M0 272 H430 M0 290 H430"></path>
+<g id="hbG">
+<rect class="ln2" x="70" y="44" width="290" height="62" rx="16"></rect>
+<path class="ln2" d="M120 106 V130 M310 106 V130"></path>
 <g class="ln2">
 <rect x="15" y="130" width="50" height="50" rx="4"></rect><rect x="65" y="130" width="50" height="50" rx="4"></rect><rect x="115" y="130" width="50" height="50" rx="4"></rect><rect x="165" y="130" width="50" height="50" rx="4"></rect><rect x="215" y="130" width="50" height="50" rx="4"></rect><rect x="265" y="130" width="50" height="50" rx="4"></rect><rect x="315" y="130" width="50" height="50" rx="4"></rect><rect x="365" y="130" width="50" height="50" rx="4"></rect>
 </g>
 <g class="ln2">
 <g class="mag"><path d="M40 170 V140 M31 150 L40 140 L49 150"></path></g>
-<g class="mag" style="animation-delay:-5.25s"><path d="M90 170 V140 M81 150 L90 140 L99 150"></path></g>
+<g class="mag" style="animation-delay:-1.75s"><path d="M90 170 V140 M81 150 L90 140 L99 150"></path></g>
 <g class="mag" style="animation-delay:-3.5s"><path d="M140 170 V140 M131 150 L140 140 L149 150"></path></g>
-<g class="mag" style="animation-delay:-1.75s"><path d="M190 170 V140 M181 150 L190 140 L199 150"></path></g>
+<g class="mag" style="animation-delay:-5.25s"><path d="M190 170 V140 M181 150 L190 140 L199 150"></path></g>
 <g class="mag"><path d="M240 170 V140 M231 150 L240 140 L249 150"></path></g>
-<g class="mag" style="animation-delay:-5.25s"><path d="M290 170 V140 M281 150 L290 140 L299 150"></path></g>
+<g class="mag" style="animation-delay:-1.75s"><path d="M290 170 V140 M281 150 L290 140 L299 150"></path></g>
 <g class="mag" style="animation-delay:-3.5s"><path d="M340 170 V140 M331 150 L340 140 L349 150"></path></g>
-<g class="mag" style="animation-delay:-1.75s"><path d="M390 170 V140 M381 150 L390 140 L399 150"></path></g>
+<g class="mag" style="animation-delay:-5.25s"><path d="M390 170 V140 M381 150 L390 140 L399 150"></path></g>
 </g>
-<path class="ln2" d="M0 232 H430 M0 250 H430"></path>
+<path class="ln2 flow" d="M40 184 C 60 226, 120 226, 140 184 M140 184 C 160 226, 220 226, 240 184 M240 184 C 260 226, 320 226, 340 184"></path>
+</g>
 </svg>
 </article>
 
@@ -421,12 +520,11 @@ html{scroll-behavior:auto}
 <p>I build and align a scanning system driven by femtosecond and nanosecond lasers, cast tissue-like agar phantoms in 3D-printed molds, and tune the signal chain from pre-amps to lock-ins. For PHYS 491 and 492 I modeled a photoacoustic endoscope in k-Wave. Ongoing.</p>
 </div>
 <svg viewBox="0 0 430 310" aria-hidden="true">
-<path class="ln2 bw" d="M215 0 V150"></path>
-<path class="ln2" d="M0 40 H170 M260 40 H430"></path>
+<path class="ln2 bw" d="M215 0 V158"></path>
+<path class="ln2" d="M0 40 H430"></path>
 <circle class="fl" cx="215" cy="170" r="13"></circle>
-<circle class="ln2 ping" cx="215" cy="170" r="130"></circle>
-<circle class="ln2 ping b" cx="215" cy="170" r="130"></circle>
-<circle class="ln2 ping c" cx="215" cy="170" r="130"></circle>
+<g id="paRings"><circle class="ln2" cx="215" cy="170" r="0"></circle><circle class="ln2" cx="215" cy="170" r="0"></circle><circle class="ln2" cx="215" cy="170" r="0"></circle></g>
+<g id="paDots" class="fl"><circle cy="40" r="7" opacity="0"></circle><circle cy="40" r="7" opacity="0"></circle><circle cy="40" r="7" opacity="0"></circle><circle cy="40" r="7" opacity="0"></circle><circle cy="40" r="7" opacity="0"></circle><circle cy="40" r="7" opacity="0"></circle></g>
 </svg>
 </article>
 
@@ -438,11 +536,13 @@ html{scroll-behavior:auto}
 <p>Full time on single-shot M² beam quality, alignment by interferometric autocollimation, long-range SWIR and MWIR observation, and how the atmosphere absorbs and scatters infrared.</p>
 </div>
 <svg viewBox="0 0 430 310" aria-hidden="true">
-<path class="ln2" d="M10 40 C 170 130, 260 130, 420 40"></path>
-<path class="ln2" d="M10 270 C 170 180, 260 180, 420 270"></path>
-<path class="ln2 bw" d="M10 155 H420"></path>
-<path class="ln2" d="M215 90 V220"></path>
-<path class="ln2" d="M205 100 L215 90 L225 100 M205 210 L215 220 L225 210"></path>
+<path class="ln2 bw" d="M6 112 H424"></path>
+<path class="ln2" id="beamUp"></path>
+<path class="ln2" id="beamDn"></path>
+<g id="beamDots" class="fl"></g>
+<path class="ln2" id="beamPlane"></path>
+<path class="ln2 ghost" d="M100 296 H330"></path>
+<path class="ln2" id="beamProf"></path>
 </svg>
 </article>
 <div class="panel first" style="width:22vw"></div>
@@ -456,7 +556,15 @@ html{scroll-behavior:auto}
 <figure class="shot s1 wipe" data-rv="1" data-speed="-0.05"><div class="frame"><img class="zoom" src="assets/lenses.jpg" alt="Clear plastic trays holding dozens of glass lenses on black foam"></div><figcaption>The lens drawers, every size on black foam.</figcaption></figure>
 <figure class="shot s2 wipe" data-rv="1" data-speed="0.04"><div class="frame"><img class="zoom" src="assets/bench.jpg" alt="Mirrors and polarizing optics on posts along a breadboard"></div><figcaption>Beam height, seen from the table's edge.</figcaption></figure>
 <figure class="shot s3 wipe" data-rv="1" data-speed="-0.08"><div class="frame"><img class="zoom" src="assets/table.jpg" alt="A dense optical table with mirror mounts, rotation stages, a power meter and an autocorrelator"></div><figcaption>A full table: mirror mounts, rotation stages, a power meter, an autocorrelator.</figcaption></figure>
-<figure class="shot s6 wipe" data-rv="1" data-speed="0.07"><div class="frame"><img class="zoom" src="assets/stage.jpg" alt="A lens with a blue coating mounted inside a black motorized stage"></div><figcaption>A coated optic sitting inside a motorized stage.</figcaption></figure>
+<figure class="shot s-lens" data-speed="0.04" id="lensBox"><svg viewBox="0 0 700 190" aria-hidden="true">
+<path class="ln2 ghost" d="M0 95 H700"></path>
+<path class="ln2" d="M70 95 V49 M61 60 L70 49 L79 60"></path>
+<g id="lLens"><path class="ln2" d="M0 22 C 16 60, 16 130, 0 168 C -16 130, -16 60, 0 22 Z"></path></g>
+<path class="ln2 lray" id="lr1"></path><path class="ln2 lray" id="lr2"></path>
+<path class="ln2 lvirt" id="lv1"></path><path class="ln2 lvirt" id="lv2"></path>
+<path class="ln2" id="lImg"></path>
+</svg><figcaption>A lens from that drawer, doing its job. Slide it along the axis.</figcaption></figure>
+<figure class="shot s6 wipe" data-rv="1" data-speed="0.04"><div class="frame"><img class="zoom" src="assets/stage.jpg" alt="A lens with a blue coating mounted inside a black motorized stage"></div><figcaption>A coated optic sitting inside a motorized stage.</figcaption></figure>
 </div>
 </section>
 
@@ -506,7 +614,8 @@ html{scroll-behavior:auto}
 </section>
 
 <section id="life" class="life" data-stop="650" data-bg="#f3203c" data-ink="#06092b">
-<div class="rome wipe" data-rv="1"><div class="frame"><img class="zoom" id="romeImg" src="assets/rome.jpg" alt="Bera with a moustache and a white hoodie, sitting in front of the Colosseum in Rome"></div></div>
+<div style="position:absolute;bottom:42vh;height:1px;width:1px" data-stop="700" data-bg="#f3203c" data-ink="#06092b"></div>
+<div class="rome wipe" data-rv="1"><div class="frame"><img class="zoom" src="assets/rome.jpg" alt="Bera with a moustache and a white hoodie, sitting in front of the Colosseum in Rome"></div></div>
 <div>
 <h2 class="d big rv" data-rv="1"><span class="ln"><span>Outside</span></span><span class="ln"><span>the lab.</span></span></h2>
 <ul class="loves">
@@ -518,6 +627,13 @@ html{scroll-behavior:auto}
 <li>E-sports</li>
 </ul>
 </div>
+<div class="trips">
+<figure class="trip t1 wipe" data-rv="1" data-speed="-0.04"><div class="frame"><img class="zoom" src="assets/cologne.jpg" alt="Bera with arms crossed on a cobbled street in Cologne, the cathedral behind him"></div><figcaption>Cologne.</figcaption></figure>
+<figure class="trip t2 wipe" data-rv="1" data-speed="0.05"><div class="frame"><img class="zoom" src="assets/vienna.jpg" alt="Bera in front of the Austrian Parliament and its Athena fountain in Vienna"></div><figcaption>Vienna.</figcaption></figure>
+<figure class="trip t3 wipe" data-rv="1" data-speed="-0.07"><div class="frame"><img class="zoom" src="assets/plate.jpg" alt="An engraved silver plate in a museum case"></div><figcaption>Silver, behind museum glass.</figcaption></figure>
+<figure class="trip t4 wipe" data-rv="1" data-speed="0.03"><div class="frame"><img class="zoom" src="assets/match.jpg" alt="Football players in red and white waiting for a free kick, seen from the stands"></div><figcaption>From the stands.</figcaption></figure>
+<figure class="trip t5 wipe" data-rv="1" data-speed="-0.03"><div class="frame"><img class="zoom" src="assets/friends.jpg" alt="Bera and friends in Turkey shirts at a match"></div><figcaption>With friends, in the same colours.</figcaption></figure>
+</div>
 </section>
 
 <section id="hi" class="ir" data-stop="1034" data-bg="#06070f" data-ink="#ffffff">
@@ -526,7 +642,9 @@ html{scroll-behavior:auto}
 <h2 class="d big rv" data-rv="1"><span class="ln"><span>Past red, you</span></span><span class="ln"><span>can't see it.</span></span></h2>
 <p class="fade" data-rv="1">Your eyes give up around 700 nm, and you just scrolled past that. This analyzer is reading a peak near 1034 nm: real light, completely invisible. That is why the last stop on this page is black.</p>
 </div>
-<div class="osa wipe" data-rv="1"><div class="frame"><img class="zoom" src="assets/osa.jpg" alt="Spectrum analyzer showing a peak near 1034 nanometers, about 4.5 nanometers wide"></div></div>
+<i class="ir-spot" id="irSpot"></i>
+<span class="ir-trail" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+<div class="osa wipe" data-rv="1"><p class="ir-note">There is a beam in this black. Move across it.</p><div class="frame"><img class="zoom" src="assets/osa.jpg" alt="Spectrum analyzer showing a peak near 1034 nanometers, about 4.5 nanometers wide"></div></div>
 </div>
 <h2 class="d big rv" data-rv="1"><span class="ln"><span>Say hi.</span></span></h2>
 <ul class="links">
@@ -536,10 +654,19 @@ html{scroll-behavior:auto}
 <li><a class="l4" href="https://www.linkedin.com/in/bera-akgeyik/" target="_blank" rel="noopener"><b>LinkedIn</b><span>bera-akgeyik</span></a></li>
 <li><a class="l5" href="https://github.com/ncdegs" target="_blank" rel="noopener"><b>GitHub</b><span>ncdegs</span></a></li>
 </ul>
-<footer class="foot"><span>Bera Akgeyik, Istanbul, 2026</span><span>Scroll back up to go shorter than 700 nm.</span></footer>
-<div class="peek" id="peek" aria-hidden="true"><img src="assets/hero_cut.webp" alt=""></div>
+<footer class="foot"><span>Bera Akgeyik, Istanbul, 2026</span><span>Scroll back up to go shorter than 700 nm.<button class="hd" id="heartDoor" type="button" tabindex="-1" aria-label="Private"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21 C5 15 2 11 2 7.5 A5 5 0 0 1 12 6 A5 5 0 0 1 22 7.5 C22 11 19 15 12 21 Z"></path></svg></button></span></footer>
 </section>
 </main>
+<div class="vault" id="vault" role="dialog" aria-modal="true" aria-label="Private">
+<button class="v-x" id="vClose" type="button" aria-label="Kapat"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="ln2" d="M5 5L19 19M19 5L5 19"></path></svg></button>
+<form class="v-form" id="vForm" autocomplete="off">
+<label for="vPw">Şifre</label>
+<input id="vPw" type="password" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false">
+<button id="vGo" type="submit">Aç</button>
+<p id="vMsg" aria-live="polite"></p>
+</form>
+<div class="v-album" id="vAlbum"></div>
+</div>
 </div>
 
 <script>
@@ -554,6 +681,8 @@ class Component extends DCLogic {
     cancelAnimationFrame(this.raf);
     (this.offs || []).forEach((f) => f());
     if (this.io) this.io.disconnect();
+    if (this.ioVg) this.ioVg.disconnect();
+    if (this.ioPn) this.ioPn.disconnect();
   }
   renderVals() { return {}; }
 
@@ -571,7 +700,7 @@ class Component extends DCLogic {
     this.ticks = [];
     this.resizers = [];
     this.lastHeroTop = 0; this.vel = 0;
-    ['setupMode', 'setupStops', 'setupRail', 'setupHero', 'setupWaves', 'setupSay', 'setupDemo', 'setupJourney', 'setupParallax', 'setupMarquee', 'setupPhones', 'setupLens', 'setupCursor', 'setupReveal', 'setupPeek'].forEach((m) => {
+    ['setupMode', 'setupStops', 'setupRail', 'setupHero', 'setupWaves', 'setupSay', 'setupDemo', 'setupJourney', 'setupParallax', 'setupMarquee', 'setupPhones', 'setupLens', 'setupCursor', 'setupReveal', 'setupVault', 'setupDiagrams', 'setupIrBeam', 'setupLines', 'setupThinLens'].forEach((m) => {
       try { this[m](); } catch (e) { console.error(m, e); }
     });
     this.on(window, 'resize', () => this.resize());
@@ -619,7 +748,8 @@ class Component extends DCLogic {
 
   setupStops() {
     const stops = this.$$('[data-stop]').map((el) => ({ el, nm: +el.dataset.stop, bg: this.hex(el.dataset.bg), ink: el.dataset.ink }));
-    const read = this.$('#read');
+    const read = this.$('#read'), wave = this.$('#readWave');
+    const FR = [[486.13, 'H'], [517.27, 'Mg'], [518.36, 'Mg'], [527.04, 'Fe'], [588.995, 'Na'], [589.592, 'Na'], [656.28, 'H']];
     let lastInk = '', lastNm = -1, lastBg = '', lastNear = null;
     this.ink = [255, 255, 255];
     this.nm = 450;
@@ -642,8 +772,18 @@ class Component extends DCLogic {
       const line = i === 0 ? tops[0] * -1 * (tb - tops[0]) / Math.max(1, tb - tops[0] - ref) : ref - tops[i];
       const p = b === a ? 0 : Math.max(0, Math.min(1, line / span));
       this.nm = a.nm + (b.nm - a.nm) * p;
-      const nm = Math.round(this.nm);
-      if (nm !== lastNm) { read.textContent = nm + ' nm'; lastNm = nm; }
+      const nm = Math.round(this.nm * 10) / 10;
+      if (nm !== lastNm) {
+        lastNm = nm;
+        const hit = FR.find((f) => Math.abs(f[0] - this.nm) < 0.4);
+        read.textContent = hit ? hit[0].toFixed(1) + ' nm ' + hit[1] : Math.round(this.nm) + ' nm';
+        if (wave) {
+          const per = this.nm * 0.027;
+          let d = 'M0 7';
+          for (let x = 2; x <= 96; x += 2) d += 'L' + x + ' ' + (7 - 5 * Math.sin(x / per * 6.2832 + this.nm * 0.4)).toFixed(1);
+          wave.setAttribute('d', d);
+        }
+      }
     });
   }
 
@@ -797,7 +937,7 @@ class Component extends DCLogic {
       const ty = this.mouse.seen && this.fine ? this.mouse.y / H : 0.5 + 0.3 * Math.cos(t * 0.37);
       sx += (tx - sx) * 0.08; sy += (ty - sy) * 0.08;
       const ink = this.ink;
-      const fade = Math.max(0, Math.min(1, (r.bottom - innerHeight * 0.1) / (innerHeight * 0.7)));
+      const fade = Math.max(0, Math.min(1, (r.bottom - innerHeight) / (innerHeight * 0.45)));
       if (fade !== this.waveFade) { cv.style.opacity = 0.17 * fade; this.waveFade = fade; }
       cx.setTransform(0.5, 0, 0, 0.5, 0, 0);
       cx.globalCompositeOperation = 'source-over';
@@ -813,6 +953,10 @@ class Component extends DCLogic {
   setupSay() {
     const says = this.$$('.say .d');
     const pics = this.$$('.say .pic');
+    if ('IntersectionObserver' in window) {
+      this.ioVg = new IntersectionObserver((list) => { list.forEach((en) => en.target.classList.toggle('run', en.isIntersecting)); }, { rootMargin: '10% 0px' });
+      pics.forEach((v) => this.ioVg.observe(v));
+    }
     let last = [];
     this.ticks.push(() => {
       if (this.isStatic) return;
@@ -1093,7 +1237,7 @@ class Component extends DCLogic {
     let x = -40, y = -40;
     this.on(this.root, 'pointerover', (e) => {
       const t = e.target;
-      const hot = t && t.closest && t.closest('a,button,#pa');
+      const hot = t && t.closest && t.closest('a,button:not(.hd),#pa');
       d.classList.toggle('big-dot', !!hot);
     });
     this.ticks.push(() => {
@@ -1124,15 +1268,278 @@ class Component extends DCLogic {
     });
   }
 
-  setupPeek() {
-    const p = this.$('#peek'), sec = this.$('#hi');
-    this.ticks.push(() => {
-      if (this.isStatic) { p.style.transform = 'translate3d(0,42%,0)'; return; }
+  // Journey diagrams: each runs from its own scroll progress.
+  setupDiagrams() {
+    const sec = this.$('#journey'), track = this.$('#track');
+    const panels = this.$$('#journey .panel').filter((p) => p.querySelector('svg'));
+    const clamp = (v) => Math.max(0, Math.min(1, v));
+    let lefts = [], dist = 0;
+    this.resizers.push(() => { lefts = panels.map((pn) => pn.offsetLeft); dist = Math.max(0, track.scrollWidth - innerWidth); });
+    if ('IntersectionObserver' in window) {
+      this.ioPn = new IntersectionObserver((l) => l.forEach((en) => en.target.classList.toggle('live', en.isIntersecting)));
+      panels.forEach((pn) => this.ioPn.observe(pn));
+    }
+    // 2023
+    const rkP = this.$('#rkPath'), rkG = this.$('#rkG'), rkL = this.$('#rkLink');
+    const rkLen = rkP.getTotalLength();
+    rkP.style.strokeDasharray = '1 1';
+    const drawRocket = (q) => {
+      const d = q * rkLen, a = rkP.getPointAtLength(d), b = rkP.getPointAtLength(Math.min(rkLen, d + 2));
+      const c = q > 0.995 ? rkP.getPointAtLength(rkLen - 2) : a, e = q > 0.995 ? a : b;
+      rkG.setAttribute('transform', 'translate(' + a.x.toFixed(1) + ' ' + a.y.toFixed(1) + ') rotate(' + (Math.atan2(e.y - c.y, e.x - c.x) * 57.2958).toFixed(1) + ')');
+      rkP.style.strokeDashoffset = 1 - q;
+      rkL.setAttribute('d', 'M' + a.x.toFixed(1) + ' ' + a.y.toFixed(1) + 'L70 262');
+    };
+    // 2024
+    const hb = this.$('#hbG');
+    const drawPod = (q) => { hb.setAttribute('transform', 'translate(0 ' + (46 * (1 - q)).toFixed(1) + ')'); };
+    // 2025
+    const rings = this.$$('#paRings circle'), dots = this.$$('#paDots circle');
+    const drawSound = (t) => {
+      rings.forEach((c, i) => {
+        const f = (t / 2.8 + i / 3) % 1, r = f * 190;
+        c.setAttribute('r', r.toFixed(1)); c.setAttribute('opacity', (1 - f).toFixed(2));
+        const dx = r > 130 ? Math.sqrt(r * r - 16900) : -1;
+        const dA = dots[i * 2], dB = dots[i * 2 + 1];
+        dA.setAttribute('opacity', dx < 0 ? 0 : (1 - f).toFixed(2)); dB.setAttribute('opacity', dx < 0 ? 0 : (1 - f).toFixed(2));
+        if (dx >= 0) { dA.setAttribute('cx', (215 - dx).toFixed(1)); dB.setAttribute('cx', (215 + dx).toFixed(1)); }
+      });
+    };
+    // 2026: a real Gaussian beam caustic and the profile at the measuring plane
+    const w0 = 18, zR = 62, zMax = 205, cy = 112;
+    const wAt = (z) => w0 * Math.sqrt(1 + (z / zR) * (z / zR));
+    let up = 'M', dn = 'M';
+    for (let z = -zMax; z <= zMax; z += 6) { const w = wAt(z); up += (215 + z) + ' ' + (cy - w).toFixed(1) + (z + 6 <= zMax ? 'L' : ''); dn += (215 + z) + ' ' + (cy + w).toFixed(1) + (z + 6 <= zMax ? 'L' : ''); }
+    this.$('#beamUp').setAttribute('d', up); this.$('#beamDn').setAttribute('d', dn);
+    const NS = 'http://www.w3.org/2000/svg', dotG = this.$('#beamDots');
+    const samples = [];
+    for (let i = 0; i < 7; i++) {
+      const z = -zMax + i * (2 * zMax / 6), w = wAt(z);
+      [-1, 1].forEach((sg) => { const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', 215 + z); c.setAttribute('cy', cy + sg * w); c.setAttribute('r', 6); c.setAttribute('opacity', 0); dotG.appendChild(c); samples.push({ c, i }); });
+    }
+    const plane = this.$('#beamPlane'), prof = this.$('#beamProf');
+    const drawBeam = (q) => {
+      const z = -zMax + 2 * zMax * q, w = wAt(z), x = 215 + z;
+      plane.setAttribute('d', 'M' + x.toFixed(1) + ' ' + (cy - w).toFixed(1) + 'V' + (cy + w).toFixed(1));
+      const pk = (w0 / w) * (w0 / w);
+      let d = '';
+      for (let u = -115; u <= 115; u += 5) { const y = 296 - 82 * pk * Math.exp(-2 * u * u / (w * w)); d += (d ? 'L' : 'M') + (215 + u) + ' ' + y.toFixed(1); }
+      prof.setAttribute('d', d);
+      samples.forEach((sm) => sm.c.setAttribute('opacity', q >= sm.i / 6 - 0.001 ? 1 : 0));
+    };
+    let lastP = -1, lastHit = -1;
+    const trackW = () => track.scrollWidth;
+    this.ticks.push((now) => {
       const r = sec.getBoundingClientRect();
-      if (r.top > innerHeight) return;
-      const f = Math.max(0, Math.min(1, (innerHeight - r.bottom + 200) / 200 + 0.6));
-      const e = 1 - Math.pow(1 - f, 3);
-      p.style.transform = 'translate3d(0,' + (100 - e * 70) + '%,0)';
+      if (r.bottom < -80 || r.top > innerHeight + 80) return;
+      const W = innerWidth, p = clamp(-r.top / Math.max(1, dist));
+      const qOf = (i) => {
+        if (this.isStatic) return 1;
+        if (this.narrow) { const b = panels[i].getBoundingClientRect(); return clamp((innerHeight * 0.92 - b.top) / (innerHeight * 0.75)); }
+        return clamp((W - (lefts[i] - p * dist)) / (W * 0.9));
+      };
+      if (this.isStatic || p !== lastP || this.narrow) {
+        lastP = p;
+        drawRocket(qOf(0)); drawPod(qOf(1)); drawBeam(qOf(3));
+        if (!this.narrow && !this.isStatic) {
+          const tip = p * trackW();
+          let h = -1; lefts.forEach((lf, i) => { if (tip > lf + 40) h = i; });
+          if (h !== lastHit) { if (h >= 0 && h > lastHit) panels[h].classList.add('hit'); lastHit = h; }
+        }
+      }
+      if (this.isStatic) drawSound(1.4); else if (panels[2].classList.contains('live')) drawSound(now * 0.001);
+    });
+  }
+
+  // A beam you cannot see, found the way a lab finds one: a card that glows where it hits.
+  setupIrBeam() {
+    const sec = this.$('.ir-top'), spot = this.$('#irSpot'), trail = this.$$('.ir-trail i');
+    let segs = [], total = 0, ti = 0, moved = false, lastU = -1;
+    this.resizers.push(() => {
+      const fr = this.$('.osa .frame').getBoundingClientRect(), b = sec.getBoundingClientRect();
+      const px = fr.left - b.left + fr.width * 0.82, py = fr.top - b.top + fr.height * 0.76;
+      const pts = [[b.width, 26], [px, 26], [px, py]];
+      segs = []; total = 0;
+      for (let i = 0; i < pts.length - 1; i++) { const l = Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]); segs.push({ a: pts[i], b: pts[i + 1], l }); total += l; }
+    });
+    const put = (x, y) => {
+      const tr = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
+      spot.style.transform = tr; spot.style.opacity = 1;
+      const t = trail[ti = (ti + 1) % trail.length];
+      t.style.transform = tr;
+      if (t.animate) t.animate([{ opacity: 0.7 }, { opacity: 0 }], { duration: 750 });
+    };
+    if (this.fine) {
+      this.on(sec, 'pointermove', (e) => {
+        moved = true;
+        const r = sec.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+        let best = null;
+        segs.forEach((g) => {
+          const dx = g.b[0] - g.a[0], dy = g.b[1] - g.a[1];
+          const u = Math.max(0, Math.min(1, ((mx - g.a[0]) * dx + (my - g.a[1]) * dy) / (g.l * g.l || 1)));
+          const x = g.a[0] + u * dx, y = g.a[1] + u * dy, d = Math.hypot(mx - x, my - y);
+          if (!best || d < best.d) best = { x, y, d };
+        });
+        if (best && best.d < 34) put(best.x, best.y); else spot.style.opacity = 0;
+      }, { passive: true });
+      this.on(sec, 'pointerleave', () => { spot.style.opacity = 0; moved = false; });
+    }
+    this.ticks.push(() => {
+      if (moved || !total) return;
+      const r = sec.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) { if (lastU !== -1) { spot.style.opacity = 0; lastU = -1; } return; }
+      const u = this.isStatic ? 0.5 : Math.max(0, Math.min(1, (innerHeight * 0.9 - r.top) / (innerHeight * 0.8 + r.height * 0.3)));
+      if (Math.abs(u - lastU) < 0.004) return;
+      lastU = u;
+      let d = u * total;
+      for (const g of segs) {
+        if (d <= g.l) { const f = g.l ? d / g.l : 0; put(g.a[0] + f * (g.b[0] - g.a[0]), g.a[1] + f * (g.b[1] - g.a[1])); break; }
+        d -= g.l;
+      }
+    });
+  }
+
+  // Dark solar lines at their true wavelengths, placed with the same mapping the readout uses.
+  setupLines() {
+    const els = this.$$('.fr');
+    this.resizers.push(() => {
+      const top = this.root.getBoundingClientRect().top;
+      const S = this.$$('[data-stop]').map((e) => ({ nm: +e.dataset.stop, y: e.getBoundingClientRect().top - top }));
+      els.forEach((el) => {
+        const nm = +el.dataset.nm;
+        let i = 0; S.forEach((st, j) => { if (st.nm <= nm) i = j; });
+        const a = S[i], b = S[Math.min(i + 1, S.length - 1)];
+        const y = a.y + (b.nm === a.nm ? 0 : (nm - a.nm) / (b.nm - a.nm)) * (b.y - a.y);
+        el.style.top = y.toFixed(1) + 'px';
+      });
+    });
+  }
+
+  // A real thin lens: 1/f = 1/u + 1/v, with a virtual image inside the focal length.
+  setupThinLens() {
+    const box = this.$('#lensBox'), svg = box.querySelector('svg');
+    const L = this.$('#lLens'), r1 = this.$('#lr1'), r2 = this.$('#lr2'), v1 = this.$('#lv1'), v2 = this.$('#lv2'), im = this.$('#lImg');
+    const f = 90, ox = 70, ax = 95, ho = 46, tipY = ax - ho, X = 700;
+    const arrow = (x, h) => { const y = ax - h, sg = h >= 0 ? 1 : -1; return 'M' + x + ' ' + ax + 'V' + y + 'M' + (x - 9) + ' ' + (y + sg * 11) + 'L' + x + ' ' + y + 'L' + (x + 9) + ' ' + (y + sg * 11); };
+    let held = false, lastX = -1;
+    const render = (lx) => {
+      if (Math.abs(lx - lastX) < 0.3) return;
+      lastX = lx;
+      L.setAttribute('transform', 'translate(' + lx.toFixed(1) + ' 0)');
+      const u = lx - ox;
+      if (Math.abs(u - f) < 3) { // at the focus: parallel rays, no image
+        r1.setAttribute('d', 'M' + ox + ' ' + tipY + 'H' + lx + 'L' + X + ' ' + (tipY + ho * (X - lx) / f));
+        r2.setAttribute('d', 'M' + ox + ' ' + tipY + 'L' + X + ' ' + (ax + ho * (X - lx) / u));
+        v1.setAttribute('d', ''); v2.setAttribute('d', ''); im.setAttribute('d', '');
+        return;
+      }
+      const v = u * f / (u - f), m = -v / u, ix = lx + v, iy = ax - ho * m;
+      if (u > f) {
+        const s1 = (iy - tipY) / (ix - lx), s2 = (iy - tipY) / (ix - ox);
+        r1.setAttribute('d', 'M' + ox + ' ' + tipY + 'H' + lx.toFixed(1) + 'L' + X + ' ' + (tipY + s1 * (X - lx)).toFixed(1));
+        r2.setAttribute('d', 'M' + ox + ' ' + tipY + 'L' + X + ' ' + (tipY + s2 * (X - ox)).toFixed(1));
+        v1.setAttribute('d', ''); v2.setAttribute('d', '');
+        im.setAttribute('d', ix < X - 4 ? arrow(ix.toFixed(1) * 1, ho * m) : '');
+      } else {
+        const s1 = ho / f, s2 = ho / u;
+        r1.setAttribute('d', 'M' + ox + ' ' + tipY + 'H' + lx.toFixed(1) + 'L' + X + ' ' + (tipY + s1 * (X - lx)).toFixed(1));
+        r2.setAttribute('d', 'M' + ox + ' ' + tipY + 'L' + X + ' ' + (tipY + s2 * (X - ox)).toFixed(1));
+        v1.setAttribute('d', 'M' + lx.toFixed(1) + ' ' + tipY + 'L' + ix.toFixed(1) + ' ' + iy.toFixed(1));
+        v2.setAttribute('d', 'M' + ox + ' ' + tipY + 'L' + ix.toFixed(1) + ' ' + iy.toFixed(1));
+        im.setAttribute('d', arrow(Math.max(0, ix), ho * m));
+      }
+    };
+    render(70 + 1.6 * f);
+    this.on(box, 'pointermove', (e) => {
+      held = true;
+      const r = svg.getBoundingClientRect();
+      render(Math.max(110, Math.min(520, (e.clientX - r.left) / r.width * 700)));
+    }, { passive: true });
+    this.on(box, 'pointerleave', () => { held = false; });
+    this.ticks.push(() => {
+      if (held || this.isStatic) return;
+      const r = box.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return;
+      const q = Math.max(0, Math.min(1, (innerHeight - r.top) / (innerHeight + r.height)));
+      render(110 + q * 400);
+    });
+  }
+
+  setupVault() {
+    const door = this.$('#heartDoor'), box = this.$('#vault'), form = this.$('#vForm'), pw = this.$('#vPw');
+    const msg = this.$('#vMsg'), album = this.$('#vAlbum'), closeBtn = this.$('#vClose'), go = this.$('#vGo');
+    const b64 = (t) => Uint8Array.from(atob(t), (c) => c.charCodeAt(0));
+    let open = false;
+    const close = () => {
+      open = false;
+      box.classList.remove('open', 'unlocked');
+      album.textContent = '';
+      form.hidden = false;
+      pw.value = ''; msg.textContent = '';
+      document.documentElement.style.overflow = '';
+      door.focus({ preventScroll: true });
+    };
+    this.on(door, 'click', () => {
+      open = true;
+      box.classList.add('open');
+      document.documentElement.style.overflow = 'hidden';
+      pw.focus();
+    });
+    this.on(closeBtn, 'click', close);
+    this.on(box, 'keydown', (e) => { if (e.key === 'Escape') close(); });
+    const hearts = () => {
+      const svg = 'M12 21 C5 15 2 11 2 7.5 A5 5 0 0 1 12 6 A5 5 0 0 1 22 7.5 C22 11 19 15 12 21 Z';
+      const NS = 'http://www.w3.org/2000/svg';
+      for (let i = 0; i < 14; i++) {
+        const el = document.createElementNS(NS, 'svg');
+        el.setAttribute('viewBox', '0 0 24 24'); el.setAttribute('class', 'fh');
+        el.style.left = (4 + Math.random() * 92) + '%';
+        el.style.width = (12 + Math.random() * 26) + 'px';
+        el.style.animationDuration = (7 + Math.random() * 8) + 's';
+        el.style.animationDelay = (-Math.random() * 12) + 's';
+        const pth = document.createElementNS(NS, 'path'); pth.setAttribute('d', svg); el.appendChild(pth);
+        album.appendChild(el);
+      }
+    };
+    this.on(form, 'submit', async (e) => {
+      e.preventDefault();
+      if (!pw.value) return;
+      go.disabled = true; msg.textContent = '...';
+      try {
+        const res = await fetch('assets/v.json');
+        if (!res.ok) throw new Error('net');
+        const v = await res.json();
+        const raw = new TextEncoder().encode(pw.value.normalize('NFC').trim().toLocaleLowerCase('tr'));
+        const base = await crypto.subtle.importKey('raw', raw, 'PBKDF2', false, ['deriveKey']);
+        const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64(v.s), iterations: v.i, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+        let plain;
+        try {
+          plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(v.n) }, key, b64(v.d));
+        } catch (bad) {
+          msg.textContent = 'Yanlış.';
+          form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
+          pw.select();
+          return;
+        }
+        const data = JSON.parse(new TextDecoder().decode(plain));
+        if (!open) return;
+        form.hidden = true;
+        box.classList.add('unlocked');
+        hearts();
+        const h = document.createElement('p'); h.className = 'v-line'; h.textContent = data.line; album.appendChild(h);
+        const wall = document.createElement('div'); wall.className = 'v-wall';
+        data.photos.forEach((src, i) => {
+          const f = document.createElement('figure'); f.className = 'v-card'; f.style.animationDelay = (0.2 + i * 0.18) + 's';
+          const im = document.createElement('img'); im.src = src; im.alt = ''; f.appendChild(im);
+          wall.appendChild(f);
+        });
+        album.appendChild(wall);
+        closeBtn.focus();
+      } catch (err) {
+        msg.textContent = 'Açılamadı, tekrar dene.';
+      } finally {
+        go.disabled = false;
+      }
     });
   }
 }
