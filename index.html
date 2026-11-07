@@ -48,7 +48,7 @@ p{margin:0;max-width:60ch}
 .rail a b{position:absolute;right:30px;top:50%;transform:translate(8px,-50%);opacity:0;white-space:nowrap;font-weight:700;font-size:14px;transition:opacity .25s,transform .35s cubic-bezier(.16,1,.3,1);font-variant-numeric:tabular-nums;pointer-events:none}
 .rail:hover a b,.rail a:focus-visible b{opacity:1;transform:translate(0,-50%)}
 .rail-mark{position:absolute;right:-5px;width:20px;height:3px;background:var(--ink);top:0;margin-top:-1.5px;border-radius:2px}
-.read{position:fixed;right:clamp(14px,2vw,30px);bottom:clamp(14px,2.6vh,26px);z-index:41;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;display:flex;align-items:center;gap:9px}
+.read{pointer-events:none;position:fixed;right:clamp(14px,2vw,30px);bottom:clamp(14px,2.6vh,26px);z-index:41;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;display:flex;align-items:center;gap:9px}
 .rw{width:96px;height:14px;overflow:visible}
 .rw path{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
 .fr{position:absolute;left:0;right:0;height:0;z-index:-1;pointer-events:none}
@@ -268,9 +268,10 @@ p{margin:0;max-width:60ch}
 .links a:hover b,.links a:focus-visible b{font-variation-settings:'wdth' 112,'wght' 900}
 .links span{position:relative;z-index:1;font-weight:500}
 .l1{--c:#ffe600}.l2{--c:#29f15f}.l3{--c:#ff4626}.l4{--c:#00e0e6}.l5{--c:#ff9f0a}
-.foot{padding:clamp(40px,8vh,80px) var(--padr) 34px var(--pad);display:flex;flex-wrap:wrap;gap:8px 30px;justify-content:space-between;font-size:14.5px;color:#c6cae6;position:relative;z-index:2;box-shadow:inset 0 1px 0 #ffffff30}
+.foot{padding:clamp(40px,8vh,80px) var(--padr) 72px var(--pad);display:flex;flex-wrap:wrap;gap:8px 30px;justify-content:space-between;font-size:14.5px;color:#c6cae6;position:relative;z-index:2;box-shadow:inset 0 1px 0 #ffffff30}
 
 /* the hidden door */
+.site .hd:focus,.site .hd:focus-visible{outline:none}
 .hd{appearance:none;background:none;border:0;padding:0;margin:0 0 0 7px;width:14px;height:14px;vertical-align:-2px;cursor:default;position:relative}
 .hd::after{content:'';position:absolute;inset:-15px}
 .hd svg{display:block;width:100%;height:100%}
@@ -1477,7 +1478,7 @@ class Component extends DCLogic {
       form.hidden = false;
       pw.value = ''; msg.textContent = '';
       document.documentElement.style.overflow = '';
-      door.focus({ preventScroll: true });
+      if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     };
     this.on(door, 'click', () => {
       open = true;
